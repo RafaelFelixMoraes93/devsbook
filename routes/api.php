@@ -17,4 +17,5 @@ Route::post('/user/avatar', 'AuthController@updateAvatar');
 Route::post('/user/cover', 'UserController@updateCover');
 
 Route::get('/feed', 'FeedController@read');
-Route::get('/user/feed', 'FeedControlleruserfeed');
+Route::get('/user/feed', 'FeedControlleruserFeed');
+Route::get('/user/{id}/feed', 'FeedController@userFeed');
