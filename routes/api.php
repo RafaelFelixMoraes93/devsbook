@@ -21,3 +21,4 @@ Route::get('/user/feed', 'FeedControlleruserFeed');
 Route::get('/user/{id}/feed', 'FeedController@userFeed');
 
 Route::get('/user', 'UserController@read');
+Route::get('/user/{id}', 'UserController@read');
