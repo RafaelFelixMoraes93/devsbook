@@ -7,3 +7,4 @@ Route::get('/ping', function() {
     return ['pong'=> true];
 });
 
+Route::post('/auth/login', 'AuthController@login');
