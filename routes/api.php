@@ -14,12 +14,12 @@ Route::post('/auth/logout', 'AuthController@logout');
 Route::post('/auth/refresh', 'AuthController@refresh');
 
 Route::post('/user', 'AuthController@create');
-Route::post('/user', 'AuthController@update');
+Route::put('/user', 'AuthController@update');
 Route::post('/user/avatar', 'AuthController@updateAvatar');
 Route::post('/user/cover', 'UserController@updateCover');
 
 Route::get('/feed', 'FeedController@read');
-Route::get('/user/feed', 'FeedControlleruserFeed');
+Route::get('/user/feed', 'FeedController@userFeed');
 Route::get('/user/{id}/feed', 'FeedController@userFeed');
 
 Route::get('/user', 'UserController@read');
