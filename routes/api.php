@@ -14,3 +14,4 @@ Route::post('/auth/refresh', 'AuthController@refresh');
 Route::post('/user', 'AuthController@create');
 Route::post('/user', 'AuthController@update');
 Route::post('/user/avatar', 'AuthController@updateAvatar');
+Route::post('/user/cover', 'UserController@updateCover');
