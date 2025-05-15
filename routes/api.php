@@ -26,3 +26,4 @@ Route::get('/user/{id}', 'UserController@read');
 Route::post('/feed', 'FeedController@create');
 
 Route::post('/post/{id}/like', 'PostController@like');
+Route::post('/post/{id}/comment', 'PostController@comment');
