@@ -16,6 +16,10 @@ class AuthController extends Controller
     ]);
     }
 
+    public function unautorized() {
+        return response()->json(['error'=>'Não autorizado'], 401);
+    }
+
     public function create(Request $request) {
         // POST *api/user(nome, email, senha e dataNascimento)
         $array = ['error'=>''];
