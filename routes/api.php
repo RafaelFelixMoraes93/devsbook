@@ -1,19 +1,21 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/ping', function() {
     return ['pong'=> true];
 });
-
+/*
 Route::get('/401', 'AuthController@unauthorized')->name('login');
 
 Route::post('/auth/login', 'AuthController@login');
 Route::post('/auth/logout', 'AuthController@logout');
 Route::post('/auth/refresh', 'AuthController@refresh');
-
-Route::post('/user', 'AuthController@create');
+*/
+Route::post('/user', [AuthController::class, 'create']);
+/*
 Route::put('/user', 'AuthController@update');
 Route::post('/user/avatar', 'AuthController@updateAvatar');
 Route::post('/user/cover', 'UserController@updateCover');
@@ -31,3 +33,4 @@ Route::post('/post/{id}/like', 'PostController@like');
 Route::post('/post/{id}/comment', 'PostController@comment');
 
 Route::get('/search', 'SearchController@search');
+*/
