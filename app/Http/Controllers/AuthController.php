@@ -20,6 +20,31 @@ class AuthController extends Controller
         return response()->json(['error'=>'Não autorizado'], 401);
     }
 
+    public function login(Request $request) {
+        $array = ['error' => ''];
+        
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        if($email && $password) {
+            $token = Auth::attempt([
+                'email' => $email,
+                'password' => $password
+            ]);
+
+            if(!$token) {
+                $array['error'] = 'E-mail e/ou senha errados!';
+            }        
+
+            $array['token'] = $token;
+            return $array;
+        } else {
+            $array['error'] = 'Dados não enviados!';
+            return $array;
+        }
+    }
+
+
     public function create(Request $request) {
         // POST *api/user(nome, email, senha e dataNascimento)
         $array = ['error'=>''];
