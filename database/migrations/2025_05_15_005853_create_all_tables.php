@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name', 100);
             $table->string('birthdate');
             $table->string('city', 100)->nullable();
-            $table->string('word', 100)->nullable();
+            $table->string('work', 100)->nullable();
             $table->string('avatar', 100)->default('default.jpg');
             $table->string('cover', 100)->default('cover.jpg');
             $table->string('token', 200)->nullable();
