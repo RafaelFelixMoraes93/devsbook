@@ -49,6 +49,14 @@ class AuthController extends Controller
         return ['error', ''];
     }
 
+    public function refresh() {
+        $token = Auth::refresh();
+        return [
+            'error', '',
+            'token' => $token
+        ];
+    }
+
 
     public function create(Request $request) {
         // POST *api/user(nome, email, senha e dataNascimento)
