@@ -44,6 +44,11 @@ class AuthController extends Controller
         }
     }
 
+    public function logout() {
+        Auth::logout();
+        return ['error', ''];
+    }
+
 
     public function create(Request $request) {
         // POST *api/user(nome, email, senha e dataNascimento)
