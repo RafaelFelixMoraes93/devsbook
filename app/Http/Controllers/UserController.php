@@ -6,7 +6,10 @@ use App\Models\User;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\ImageManagerStatic as Image;
+use Intervention\Image\ImageManager;
+
+
 
 class UserController extends Controller
 {
@@ -90,9 +93,15 @@ class UserController extends Controller
 
                 $destinyPath = public_path('/media/avatar');
 
-                $img = Image::make($image->path())
-                    ->fit(200, 200)
-                    ->save($destinyPath.'/'.$filename);
+                if (!file_exists($destinyPath)) {
+                    mkdir($destinyPath, 0755, true);
+                }
+
+                $manager = ImageManager::gd();
+
+                $img = $manager->read($image->path())
+                    ->cover(200, 200)
+                    ->save($destinyPath . '/' . $filename);
 
                 $user = User::find($this->loggedUser['id']);
                 $user->avatar = $filename;
