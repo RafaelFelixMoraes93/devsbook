@@ -91,7 +91,7 @@ class UserController extends Controller
 
                 $filename = md5(time().rand(0, 9999)).'jpg';
 
-                $destinyPath = public_path('/media/avatar');
+                $destinyPath = public_path('/media/avatars');
 
                 if (!file_exists($destinyPath)) {
                     mkdir($destinyPath, 0755, true);
@@ -108,6 +108,47 @@ class UserController extends Controller
                 $user->save();
 
                 $array['url'] = url('/media/avatars/'.$filename);
+            } else {
+                $array['error'] = 'Arquivo não suportado!';
+                return $array;
+            }
+
+        } else {
+            $array['error'] = 'Arquivo não enviado!';
+            return $array;
+        }
+
+        return $array;
+    }
+
+    public function updateCover(Request $request) {
+        $array = ['error' => ''];
+        $allowedTypes = ['image/jpg', 'image/jpeg', 'image/png'];
+
+        $image = $request->file('cover');
+
+        if($image) {
+            if(in_array($image->getClientMimeType(), $allowedTypes)) {
+
+                $filename = md5(time().rand(0, 9999)).'jpg';
+
+                $destinyPath = public_path('/media/covers');
+
+                if (!file_exists($destinyPath)) {
+                    mkdir($destinyPath, 0755, true);
+                }
+
+                $manager = ImageManager::gd();
+
+                $img = $manager->read($image->path())
+                    ->cover(850, 310)
+                    ->save($destinyPath . '/' . $filename);
+
+                $user = User::find($this->loggedUser['id']);
+                $user->cover = $filename;
+                $user->save();
+
+                $array['url'] = url('/media/covers/'.$filename);
             } else {
                 $array['error'] = 'Arquivo não suportado!';
                 return $array;
