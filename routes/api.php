@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FeedController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,9 +29,9 @@ Route::get('/user/{id}/feed', 'FeedController@userFeed');
 
 Route::get('/user', 'UserController@read');
 Route::get('/user/{id}', 'UserController@read');
-
-Route::post('/feed', 'FeedController@create');
-
+*/
+Route::post('/feed', [FeedController::class, 'create']);
+/*
 Route::post('/post/{id}/like', 'PostController@like');
 Route::post('/post/{id}/comment', 'PostController@comment');
 
