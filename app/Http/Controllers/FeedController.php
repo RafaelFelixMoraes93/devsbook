@@ -6,6 +6,10 @@ use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
+use App\Models\PostLike;
+use App\Models\PostComment;
+use App\Models\User;
+use App\Models\UserRelation;
 use Intervention\Image\ImageManager;
 
 class FeedController extends Controller
@@ -76,6 +80,17 @@ class FeedController extends Controller
             $array['error'] = 'Dados não enviados!';            
         }
         
+        return $array;
+    }
+
+    public function read(Request $request) {
+        $array = ['error' => ''];
+
+        $page = intval($request->input('page'));
+        $perpage = 2;
+
+
+
         return $array;
     }
 }
