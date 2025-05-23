@@ -89,6 +89,13 @@ class FeedController extends Controller
         $page = intval($request->input('page'));
         $perpage = 2;
 
+        $users = [];
+        $userList = UserRelation::where('user_from', $this->loggedUser['id']);
+        foreach($userList as $userItem) {
+            $users[] = $userItem['user_to'];
+        }
+
+        $users[] = $this->loggedUser['id'];
 
 
         return $array;
