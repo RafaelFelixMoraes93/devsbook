@@ -97,6 +97,11 @@ class FeedController extends Controller
 
         $users[] = $this->loggedUser['id'];
 
+        $postList = Post::whereIn('id_user', $users)
+        ->orderBy('created_at', 'desc')
+        ->offset($page * $perpage)
+        ->limit($perpage)
+        ->get();
 
         return $array;
     }
