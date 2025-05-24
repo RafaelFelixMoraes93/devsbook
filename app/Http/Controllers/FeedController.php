@@ -131,6 +131,15 @@ class FeedController extends Controller
         $userInfo['cover'] = url('media/covers/'.$userInfo['cover']);
         $postList[$postKey]['user'] = $userInfo;
 
+        //preencher informações de like
+        $likes = PostLike::where('id_post', $postItem['id'])->count();
+        $postList[$postKey]['likeCount'] = $likes;
+
+        $isLiked = PostLike::where('id_post', $postItem['id'])
+        ->where('id)user', $loggedId)
+        ->count();
+        $postList[$postKey]['liked'] = ($isLiked > 0) ? true : false;
+
         return $postList;
     }
 }
