@@ -140,6 +140,16 @@ class FeedController extends Controller
         ->count();
         $postList[$postKey]['liked'] = ($isLiked > 0) ? true : false;
 
+        //preencher informações de comentários
+        $comments = PostComment::where('id_post', $postItem['id'])->get();
+        foreach($comments as $commentKey => $comment) {
+            $user = User::find($comment['id_user']);
+            $userInfo['avatar'] = url('media/avatars/'.$user['avatar']);
+            $userInfo['cover'] = url('media/covers/'.$user['cover']);
+            $comments[$commentKey]['user'] = $user;
+        }
+        $postList[$postKey]['comments'] = $comments;
+
         return $postList;
     }
 }
