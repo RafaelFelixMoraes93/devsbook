@@ -125,6 +125,11 @@ class FeedController extends Controller
             }
         }
 
+        //preencher informações de usuário
+        $userInfo = User::find($postItem['id_user']);
+        $userInfo['avatar'] = url('media/avatars/'.$userInfo['avatar']);
+        $userInfo['cover'] = url('media/covers/'.$userInfo['cover']);
+        $postList[$postKey]['user'] = $userInfo;
 
         return $postList;
     }
