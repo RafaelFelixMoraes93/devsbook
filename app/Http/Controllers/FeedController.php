@@ -103,6 +103,29 @@ class FeedController extends Controller
         ->limit($perpage)
         ->get();
 
+        $total = Post::whereIn('id_user', $users)->count();
+        $pageCount = ($total / $perpage);
+
+        $posts = $this->_postListToObjects($postList, $this->loggedUser['id']);
+
+        $array['posts'] = [];
+        $array['pageCount'] = $pageCount;
+        $array['currentPage'] = $page;
+
         return $array;
+    }
+
+    private function _postListToObjects($postList, $loggedId) {
+        //Verificar se o post é meu
+        foreach($postList as $postKey => $postItem) {
+            if($postItem['id_user'] == $loggedId) {
+                $postList[$postKey]['mine'] = true;
+            } else {
+                $postList[$postKey]['mine'] = false;
+            }
+        }
+
+
+        return $postList;
     }
 }
