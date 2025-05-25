@@ -169,6 +169,12 @@ class FeedController extends Controller
         $total = Post::where('id_user', $id)->count();
         $pageCount = ($total / $perpage);
 
+        //preencher as informações adicionais
+        $posts = $this->_postListToObjects($postList, $this->loggedUser['id']);
+
+        $array['posts'] = $posts;
+        $array['pageCount'] = $pageCount;
+        $array['currentPage'] = $page;
 
         return $array;
     }
