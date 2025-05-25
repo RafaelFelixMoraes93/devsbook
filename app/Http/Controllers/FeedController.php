@@ -147,5 +147,29 @@ class FeedController extends Controller
     }
 
     return $postList;
-}
+    }
+
+    public function userFeed(Request $request, $id = false) {
+        $array = ['error' => ''];
+
+        if($id == false) {
+            $id = $this->loggedUser['id'];
+        }
+
+        $page = intval($request->input('page', 0));
+        $perpage = 2;
+
+        //pegar os posts do usuário ordenados por data
+        $postList = Post::where('id)user', $id)
+        ->orderBy('created_at', 'desc')
+        ->offset($page * $perpage)
+        ->limit($perpage)
+        ->get();
+
+        $total = Post::where('id_user', $id)->count();
+        $pageCount = ($total / $perpage);
+
+
+        return $array;
+    }
 }
