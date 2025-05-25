@@ -86,11 +86,11 @@ class FeedController extends Controller
     public function read(Request $request) {
         $array = ['error' => ''];
 
-        $page = intval($request->input('page'));
+        $page = intval($request->input('page', 0));
         $perpage = 2;
 
         $users = [];
-        $userList = UserRelation::where('user_from', $this->loggedUser['id']);
+        $userList = UserRelation::where('user_from', $this->loggedUser['id'])->get();
         foreach($userList as $userItem) {
             $users[] = $userItem['user_to'];
         }
@@ -108,7 +108,7 @@ class FeedController extends Controller
 
         $posts = $this->_postListToObjects($postList, $this->loggedUser['id']);
 
-        $array['posts'] = [];
+        $array['posts'] = $posts;
         $array['pageCount'] = $pageCount;
         $array['currentPage'] = $page;
 
@@ -116,40 +116,36 @@ class FeedController extends Controller
     }
 
     private function _postListToObjects($postList, $loggedId) {
-        //Verificar se o post é meu
-        foreach($postList as $postKey => $postItem) {
-            if($postItem['id_user'] == $loggedId) {
-                $postList[$postKey]['mine'] = true;
-            } else {
-                $postList[$postKey]['mine'] = false;
-            }
-        }
+    foreach ($postList as $postKey => $postItem) {
+        // Verificar se o post é meu
+        $postList[$postKey]['mine'] = ($postItem['id_user'] == $loggedId);
 
-        //preencher informações de usuário
+        // Preencher informações do usuário
         $userInfo = User::find($postItem['id_user']);
-        $userInfo['avatar'] = url('media/avatars/'.$userInfo['avatar']);
-        $userInfo['cover'] = url('media/covers/'.$userInfo['cover']);
+        $userInfo['avatar'] = url('media/avatars/' . $userInfo['avatar']);
+        $userInfo['cover'] = url('media/covers/' . $userInfo['cover']);
         $postList[$postKey]['user'] = $userInfo;
 
-        //preencher informações de like
+        // Preencher informações de like
         $likes = PostLike::where('id_post', $postItem['id'])->count();
         $postList[$postKey]['likeCount'] = $likes;
 
         $isLiked = PostLike::where('id_post', $postItem['id'])
-        ->where('id)user', $loggedId)
-        ->count();
-        $postList[$postKey]['liked'] = ($isLiked > 0) ? true : false;
+            ->where('id_user', $loggedId) // <- corrigido aqui
+            ->count();
+        $postList[$postKey]['liked'] = ($isLiked > 0);
 
-        //preencher informações de comentários
+        // Preencher informações de comentários
         $comments = PostComment::where('id_post', $postItem['id'])->get();
-        foreach($comments as $commentKey => $comment) {
+        foreach ($comments as $commentKey => $comment) {
             $user = User::find($comment['id_user']);
-            $userInfo['avatar'] = url('media/avatars/'.$user['avatar']);
-            $userInfo['cover'] = url('media/covers/'.$user['cover']);
+            $user['avatar'] = url('media/avatars/' . $user['avatar']);
+            $user['cover'] = url('media/covers/' . $user['cover']);
             $comments[$commentKey]['user'] = $user;
         }
         $postList[$postKey]['comments'] = $comments;
-
-        return $postList;
     }
+
+    return $postList;
+}
 }
