@@ -178,6 +178,8 @@ class UserController extends Controller
         $info['avatar'] = url('media/avatars/'.$info['avatar']);
         $info['cover'] = url('media/covers/'.$info['cover']);
 
+        $info['me'] = ($info['id'] == $this->loggedUser['id']) ? true : false;
+
         $array['data'] = $info;
 
         return $array;
