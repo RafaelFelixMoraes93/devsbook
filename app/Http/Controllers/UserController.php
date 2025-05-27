@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserRelation;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -183,6 +184,9 @@ class UserController extends Controller
         $datefrom = new \DateTime($info['birthdate']);
         $dateTo = new \DateTime('today');
         $info['age'] = $datefrom->diff($dateTo)->y;
+
+        $info['followers'] = UserRelation::where('user_to', $info['id'])->count();
+        $info['following'] = UserRelation::where('user_from', $info['id'])->count();
 
         $array['data'] = $info;
 
