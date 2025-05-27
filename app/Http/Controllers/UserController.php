@@ -193,6 +193,11 @@ class UserController extends Controller
         ->where('type', 'photo')
         ->count();
 
+        $hasRelation = UserRelation::where('user_from', $this->loggedUser['id'])
+        ->where('user_to', $info['id'])
+        ->count();
+        $info['isFollowing'] = ($hasRelation > 0) ? true : false;
+
         $array['data'] = $info;
 
         return $array;
