@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FeedController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Models\PostComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,8 +33,9 @@ Route::get('/user', [UserController::class, 'read']);
 Route::get('/user/{id}', [UserController::class, 'read']);
 
 Route::post('/feed', [FeedController::class, 'create']);
+
+Route::post('/post/{id}/like', [PostController::class, 'like']);
 /*
-Route::post('/post/{id}/like', 'PostController@like');
 Route::post('/post/{id}/comment', 'PostController@comment');
 
 Route::get('/search', 'SearchController@search');
