@@ -180,6 +180,10 @@ class UserController extends Controller
 
         $info['me'] = ($info['id'] == $this->loggedUser['id']) ? true : false;
 
+        $datefrom = new \DateTime($info['birthdate']);
+        $dateTo = new \DateTime('today');
+        $info['age'] = $datefrom->diff($dateTo)->y;
+
         $array['data'] = $info;
 
         return $array;
