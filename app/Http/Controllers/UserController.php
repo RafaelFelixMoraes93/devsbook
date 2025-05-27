@@ -175,6 +175,9 @@ class UserController extends Controller
             $info = $this->loggedUser;
         }
 
+        $info['avatar'] = url('media/avatars/'.$info['avatar']);
+        $info['cover'] = url('media/covers/'.$info['cover']);
+
         $array['data'] = $info;
 
         return $array;
