@@ -32,7 +32,7 @@ class PostController extends Controller
                     ->first();
                     $postLike->delete();
 
-                    $isLiked = false;
+                    $array['isLiked'] = false;
                 } else {
                     $newPostLike = new PostLike();
                     $newPostLike->id_post = $id;
@@ -40,8 +40,13 @@ class PostController extends Controller
                     $newPostLike->created_at = date('Y-m-d H-i-s');
                     $newPostLike->save();
 
-                    $isLiked = true;
+                    $array['isLiked'] = true;
                 }
+
+                $array['isLiked'] = $isLiked;
+
+                $likeCount = PostLike::where('id_post', $id)->count();
+                $array['likeCount'] = $likeCount;
 
         } else {
             $array['error'] = 'Post não existe!';
