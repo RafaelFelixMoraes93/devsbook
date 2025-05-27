@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use App\Models\UserRelation;
 use Illuminate\Routing\Controller;
@@ -187,6 +188,10 @@ class UserController extends Controller
 
         $info['followers'] = UserRelation::where('user_to', $info['id'])->count();
         $info['following'] = UserRelation::where('user_from', $info['id'])->count();
+
+        $info['photoCount'] = Post::where('id_user', $info['id'])
+        ->where('type', 'photo')
+        ->count();
 
         $array['data'] = $info;
 
