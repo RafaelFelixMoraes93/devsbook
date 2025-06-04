@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FeedController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Models\PostComment;
 use Illuminate\Http\Request;
@@ -37,7 +38,5 @@ Route::post('/feed', [FeedController::class, 'create']);
 Route::post('/post/{id}/like', [PostController::class, 'like']);
 
 Route::post('/post/{id}/comment', [PostComment::class, 'comment']);
-/*
 
-Route::get('/search', 'SearchController@search');
-*/
+Route::get('/search', [SearchController::class, 'search']);
